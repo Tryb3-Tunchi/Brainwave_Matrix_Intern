@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day Planner - Week View</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/component.css" />
+    <link rel="stylesheet" href="styles/responsive.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Mobile Navigation Toggle -->
+    <button class="mobile-nav-toggle" id="mobile-nav-toggle">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="app-container">
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar">
+        <div class="logo">
+          <i class="fas fa-calendar-check"></i>
+          <span>Day Planner</span>
+        </div>
+        <nav>
+          <ul class="nav-links">
+            <li>
+              <a href="index.html" data-view="today">
+                <i class="fas fa-calendar-day"></i>
+                <span>Today</span>
+              </a>
+            </li>
+            <li class="active">
+              <a href="week.html" data-view="week">
+                <i class="fas fa-calendar-week"></i>
+                <span>Week</span>
+              </a>
+            </li>
+            <li>
+              <a href="month.html" data-view="month">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Month</span>
+              </a>
+            </li>
+            <li>
+              <a href="settings.html" data-view="settings">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <header class="app-header">
+          <div class="date-display">
+            <h1>This Week</h1>
+            <p id="current-date">Week of June 24, 2024</p>
+            <div class="task-counter">0 tasks</div>
+          </div>
+          <div class="header-actions">
+            <div class="priority-filter">
+              <select id="priority-filter" class="filter-select">
+                <option value="all">All Priorities</option>
+                <option value="high">High Priority</option>
+                <option value="medium">Medium Priority</option>
+                <option value="low">Low Priority</option>
+              </select>
+            </div>
+            <button class="btn add-task" id="add-task-btn">
+              <i class="fas fa-plus"></i>
+              <span>Add Task</span>
+            </button>
+            <div class="search-box">
+              <input
+                type="text"
+                placeholder="Search tasks..."
+                id="search-input"
+              />
+              <i class="fas fa-search"></i>
+            </div>
+          </div>
+        </header>
+
+        <div class="week-container">
+          <div class="week-days" id="week-days">
+            <!-- Week days will be generated here -->
+          </div>
+        </div>
+      </main>
+
+      <!-- Calendar Widget -->
+      <aside class="calendar-widget">
+        <div class="calendar-header">
+          <button class="btn-prev" id="calendar-prev">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <h3 id="calendar-month">June 2024</h3>
+          <button class="btn-next" id="calendar-next">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+        <div class="calendar-grid" id="calendar-days"></div>
+      </aside>
+    </div>
+
+    <!-- Task Modal -->
+    <div class="modal" id="task-modal">
+      <div class="modal-content">
+        <button class="close-modal" id="close-modal">&times;</button>
+        <h2 id="modal-title">Add New Task</h2>
+        <form id="task-form">
+          <input type="hidden" id="task-id" />
+
+          <div class="form-group">
+            <label for="task-title">Title</label>
+            <input type="text" id="task-title" required />
+          </div>
+
+          <div class="form-group">
+            <label for="task-description">Description</label>
+            <textarea id="task-description"></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="task-date">Date</label>
+              <input type="date" id="task-date" required />
+            </div>
+
+            <div class="form-group">
+              <label for="task-start-time">Start Time</label>
+              <input type="time" id="task-start-time" required />
+            </div>
+
+            <div class="form-group">
+              <label for="task-end-time">End Time</label>
+              <input type="time" id="task-end-time" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="task-priority">Priority</label>
+              <select id="task-priority" required>
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="task-category">Category</label>
+              <select id="task-category">
+                <option value="work">Work</option>
+                <option value="personal">Personal</option>
+                <option value="health">Health</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn cancel" id="cancel-btn">
+              Cancel
+            </button>
+            <button type="submit" class="btn save" id="save-btn">
+              Save Task
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/tasks.js"></script>
+    <script src="scripts/calendar.js"></script>
+    <script src="scripts/app.js"></script>
+    <script>
+      // Week view specific functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        generateWeekView();
+      });
+
+      function generateWeekView() {
+        const weekDays = document.getElementById("week-days");
+        const today = new Date();
+        const startOfWeek = new Date(today);
+        startOfWeek.setDate(today.getDate() - today.getDay());
+
+        weekDays.innerHTML = "";
+
+        for (let i = 0; i < 7; i++) {
+          const currentDate = new Date(startOfWeek);
+          currentDate.setDate(startOfWeek.getDate() + i);
+
+          const dayElement = document.createElement("div");
+          dayElement.className = "week-day-container";
+
+          const dateString = currentDate.toISOString().split("T")[0];
+          const isToday = currentDate.toDateString() === today.toDateString();
+          const dayName = currentDate.toLocaleDateString("en-US", {
+            weekday: "short",
+          });
+          const dayNumber = currentDate.getDate();
+
+          dayElement.innerHTML = `
+            <div class="day-header ${isToday ? "today" : ""}">
+              <h3>${dayName}</h3>
+              <span class="day-number">${dayNumber}</span>
+            </div>
+            <div class="planner-container">
+              <div class="time-slots" id="time-slots-${dateString}"></div>
+            </div>
+          `;
+
+          weekDays.appendChild(dayElement);
+
+          // Generate time slots for this day
+          generateTimeSlotsForDay(dateString);
+
+          // Load tasks for this day
+          if (typeof renderTasksForDate === "function") {
+            renderTasksForDate(dateString);
+          }
+        }
+      }
+
+      function generateTimeSlotsForDay(dateString) {
+        const timeSlotsContainer = document.getElementById(
+          `time-slots-${dateString}`
+        );
+        if (!timeSlotsContainer) return;
+
+        timeSlotsContainer.innerHTML = "";
+
+        // Get time range from settings
+        const startTime =
+          localStorage.getItem("dayPlannerStartTime") || "06:00";
+        const endTime = localStorage.getItem("dayPlannerEndTime") || "23:00";
+
+        const startHour = parseInt(startTime.split(":")[0]);
+        const endHour = parseInt(endTime.split(":")[0]);
+
+        // Generate time slots from start to end time
+        for (let hour = startHour; hour <= endHour; hour++) {
+          const timeSlot = document.createElement("div");
+          timeSlot.className = "time-slot";
+          timeSlot.dataset.time = `${hour.toString().padStart(2, "0")}:00`;
+          timeSlot.dataset.date = dateString;
+
+          const timeLabel = document.createElement("div");
+          timeLabel.className = "time-label";
+          timeLabel.textContent = formatHour(hour);
+
+          const taskArea = document.createElement("div");
+          taskArea.className = "task-area";
+
+          // Add click event to time slot for quick task creation
+          timeSlot.addEventListener("click", (e) => {
+            if (
+              e.target === timeSlot ||
+              e.target === timeLabel ||
+              e.target === taskArea
+            ) {
+              openTaskModalForTimeSlot(hour, dateString);
+            }
+          });
+
+          timeSlot.appendChild(timeLabel);
+          timeSlot.appendChild(taskArea);
+          timeSlotsContainer.appendChild(timeSlot);
+        }
+      }
+
+      function formatHour(hour) {
+        const timeFormat = localStorage.getItem("dayPlannerTimeFormat") || "12";
+
+        if (timeFormat === "24") {
+          return `${hour.toString().padStart(2, "0")}:00`;
+        } else {
+          return hour > 12
+            ? `${hour - 12} PM`
+            : hour === 12
+            ? "12 PM"
+            : `${hour} AM`;
+        }
+      }
+
+      function openTaskModalForTimeSlot(hour, dateString) {
+        console.log(
+          "Opening task modal for time slot:",
+          hour,
+          "on date:",
+          dateString
+        );
+
+        // Use the main app.js function to open modal with pre-filled date and time
+        if (typeof openTaskModal === "function") {
+          const startTime = `${String(hour).padStart(2, "0")}:00`;
+          openTaskModal(null, startTime, dateString);
+        } else {
+          // Fallback to direct modal opening
+          const modal = document.getElementById("task-modal");
+          const form = document.getElementById("task-form");
+
+          if (!modal || !form) {
+            console.error("Modal or form elements not found");
+            return;
+          }
+
+          // Set up the modal for new task
+          document.getElementById("modal-title").textContent = "Add New Task";
+          form.reset();
+
+          // Set the specific date
+          document.getElementById("task-date").value = dateString;
+
+          // Set start time to the clicked hour
+          const startTime = `${String(hour).padStart(2, "0")}:00`;
+
+          // Get default duration from settings
+          const defaultDuration =
+            parseInt(localStorage.getItem("dayPlannerDefaultDuration")) || 60;
+          const endHour = hour + Math.floor(defaultDuration / 60);
+          const endMinute = defaultDuration % 60;
+          const endTime = `${String(endHour).padStart(2, "0")}:${String(
+            endMinute
+          ).padStart(2, "0")}`;
+
+          document.getElementById("task-start-time").value = startTime;
+          document.getElementById("task-end-time").value = endTime;
+
+          // Set default priority from settings
+          const defaultPriority =
+            localStorage.getItem("dayPlannerDefaultPriority") || "medium";
+          document.getElementById("task-priority").value = defaultPriority;
+
+          // Show modal
+          modal.classList.add("active");
+          document.body.classList.add("modal-open");
+
+          // Focus on title input
+          setTimeout(() => {
+            const titleInput = document.getElementById("task-title");
+            if (titleInput) {
+              titleInput.focus();
+            }
+          }, 100);
+        }
+      }
+    </script>
+  </body>
+</html>

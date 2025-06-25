@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modal Test</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/component.css" />
+    <link rel="stylesheet" href="styles/responsive.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .btn {
+        background: #4285f4;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.2s;
+      }
+
+      .btn:hover {
+        background: #3367d6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Modal Test</h1>
+      <button id="open-modal-btn" class="btn">Open Modal</button>
+    </div>
+
+    <!-- Task Modal -->
+    <div class="modal" id="task-modal">
+      <div class="modal-content">
+        <button class="close-modal" id="close-modal">&times;</button>
+        <h2 id="modal-title">Test Modal</h2>
+        <form id="task-form">
+          <div class="form-group">
+            <label for="test-input">Test Input</label>
+            <input type="text" id="test-input" required />
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn cancel" id="cancel-btn">
+              Cancel
+            </button>
+            <button type="submit" class="btn save" id="save-btn">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const openBtn = document.getElementById("open-modal-btn");
+        const modal = document.getElementById("task-modal");
+        const closeBtn = document.getElementById("close-modal");
+        const cancelBtn = document.getElementById("cancel-btn");
+        const form = document.getElementById("task-form");
+
+        function openModal() {
+          console.log("Opening modal...");
+          modal.classList.add("active");
+          document.body.classList.add("modal-open");
+        }
+
+        function closeModal() {
+          console.log("Closing modal...");
+          modal.classList.remove("active");
+          document.body.classList.remove("modal-open");
+          form.reset();
+        }
+
+        openBtn.addEventListener("click", openModal);
+        closeBtn.addEventListener("click", closeModal);
+        cancelBtn.addEventListener("click", closeModal);
+
+        // Close on outside click
+        modal.addEventListener("click", function (e) {
+          if (e.target === modal) {
+            closeModal();
+          }
+        });
+
+        // Close on escape key
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") {
+            closeModal();
+          }
+        });
+
+        // Form submission
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          console.log("Form submitted");
+          alert("Form submitted successfully!");
+          closeModal();
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,798 @@
+@media (max-width: 1200px) {
+  .app-container {
+    grid-template-columns: 250px 1fr 280px;
+  }
+
+  .calendar-widget {
+    padding: 16px;
+  }
+
+  .search-box input {
+    width: 200px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .app-container {
+    grid-template-columns: 240px 1fr;
+  }
+
+  .calendar-widget {
+    display: none;
+  }
+
+  .mobile-nav-toggle {
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100vh;
+    z-index: 100;
+    transition: left 0.3s ease;
+    background-color: var(--bg-color);
+    border-right: 1px solid var(--border-color);
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  .main-content {
+    padding: 15px;
+  }
+
+  .app-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .date-display {
+    text-align: center;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .priority-filter {
+    order: 1;
+  }
+
+  .filter-select {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .search-box {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .search-box input {
+    width: 100%;
+  }
+
+  .week-container {
+    padding: 15px;
+  }
+
+  .week-days {
+    gap: 15px;
+  }
+
+  .month-grid {
+    gap: 1px;
+  }
+
+  .month-day {
+    min-height: 80px;
+    padding: 8px;
+  }
+
+  .month-day-number {
+    font-size: 0.9rem;
+  }
+
+  .task-indicator {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 8px;
+  }
+
+  .app-header {
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .date-display h1 {
+    font-size: 1.3rem;
+  }
+
+  .date-display p {
+    font-size: 0.9rem;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .priority-filter {
+    order: 1;
+  }
+
+  .filter-select {
+    width: 100%;
+    min-width: auto;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .search-box {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .week-container {
+    padding: 8px;
+  }
+
+  .week-days {
+    gap: 8px;
+  }
+
+  .week-day-container {
+    border-radius: 6px;
+  }
+
+  .day-header {
+    padding: 12px 15px;
+  }
+
+  .day-header h3 {
+    font-size: 1rem;
+  }
+
+  .day-number {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+
+  .month-day {
+    min-height: 60px;
+    padding: 4px;
+  }
+
+  .month-day-number {
+    font-size: 0.7rem;
+    margin-bottom: 4px;
+  }
+
+  .task-indicator {
+    font-size: 0.4rem;
+    padding: 1px 3px;
+  }
+
+  .time-slot {
+    min-height: 50px;
+  }
+
+  .time-label {
+    width: 50px;
+    font-size: 0.7rem;
+    padding: 6px 8px;
+  }
+
+  .task-area {
+    padding: 6px;
+  }
+
+  .btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .modal-content {
+    margin: 10px;
+    padding: 15px;
+    max-height: 95vh;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+
+  .task {
+    padding: 8px;
+    margin-bottom: 4px;
+  }
+
+  .task-header {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .task-meta {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .task-priority,
+  .task-category {
+    font-size: 0.7rem;
+  }
+
+  .toast {
+    min-width: 250px;
+    max-width: 300px;
+    padding: 12px 16px;
+  }
+
+  .toast-container {
+    top: 10px;
+    right: 10px;
+  }
+}
+
+/* Ensure modal is always centered and accessible */
+.modal {
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-content {
+  position: relative;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+
+/* Improve touch targets on mobile */
+.btn,
+.btn-icon {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Better focus states for accessibility */
+.btn:focus,
+.btn-icon:focus,
+.close-modal:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling for modal content */
+.modal-content {
+  scroll-behavior: smooth;
+}
+
+/* Prevent body scroll when modal is open */
+body.modal-open {
+  overflow: hidden;
+}
+
+@media print {
+  .sidebar,
+  .calendar-widget,
+  .theme-toggle,
+  .header-actions button {
+    display: none !important;
+  }
+
+  .app-container {
+    grid-template-columns: 1fr !important;
+  }
+
+  .main-content {
+    padding: 0 !important;
+  }
+
+  .task {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border-left-width: 3px !important;
+  }
+
+  .time-slot {
+    page-break-inside: avoid;
+  }
+}
+
+/* Mobile Navigation Toggle */
+.mobile-nav-toggle {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1001;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.2s ease;
+}
+
+.mobile-nav-toggle:hover {
+  background: #3367d6;
+  transform: scale(1.05);
+}
+
+.mobile-nav-toggle i {
+  font-size: 1.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .app-container {
+    grid-template-columns: 250px 1fr 280px;
+  }
+
+  .calendar-widget {
+    padding: 16px;
+  }
+
+  .search-box input {
+    width: 200px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .app-container {
+    grid-template-columns: 240px 1fr;
+  }
+
+  .calendar-widget {
+    display: none;
+  }
+
+  .mobile-nav-toggle {
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100vh;
+    z-index: 100;
+    transition: left 0.3s ease;
+    background-color: var(--bg-color);
+    border-right: 1px solid var(--border-color);
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  .main-content {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    grid-template-columns: 1fr;
+  }
+
+  .mobile-nav-toggle {
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100vh;
+    z-index: 100;
+    transition: left 0.3s ease;
+    background-color: var(--bg-color);
+    border-right: 1px solid var(--border-color);
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  .main-content {
+    padding: 10px;
+  }
+
+  .app-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+    text-align: center;
+    padding: 15px 20px;
+  }
+
+  .date-display {
+    text-align: center;
+  }
+
+  .date-display h1 {
+    font-size: 1.5rem;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .priority-filter {
+    order: 1;
+  }
+
+  .filter-select {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .search-box {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .search-box input {
+    width: 100%;
+  }
+
+  .week-container {
+    padding: 10px;
+  }
+
+  .week-days {
+    gap: 10px;
+  }
+
+  .week-day-container {
+    border-radius: 8px;
+  }
+
+  .day-header {
+    padding: 15px 20px;
+  }
+
+  .day-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .month-day {
+    min-height: 70px;
+    padding: 6px;
+  }
+
+  .month-day-number {
+    font-size: 0.8rem;
+  }
+
+  .task-indicator {
+    font-size: 0.5rem;
+    padding: 2px 4px;
+  }
+
+  .time-label {
+    width: 60px;
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+
+  .btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    padding: 12px 16px;
+  }
+
+  .planner-container {
+    padding: 12px 16px;
+  }
+
+  .settings-container {
+    padding: 12px 16px;
+  }
+
+  .time-label {
+    width: 50px;
+    font-size: 0.75rem;
+  }
+
+  .btn {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .mobile-nav-toggle {
+    top: 16px;
+    left: 16px;
+    padding: 10px;
+  }
+
+  .mobile-nav-toggle i {
+    font-size: 1rem;
+  }
+
+  /* Week view adjustments */
+  .week-container {
+    grid-template-columns: 50px repeat(7, 1fr);
+  }
+
+  .week-header {
+    padding: 6px 2px;
+    font-size: 0.7rem;
+  }
+
+  .week-day {
+    padding: 2px;
+  }
+
+  .week-day-header {
+    font-size: 0.6rem;
+  }
+
+  .week-day-date {
+    font-size: 0.5rem;
+  }
+
+  /* Month view adjustments */
+  .month-day {
+    min-height: 50px;
+    padding: 2px;
+  }
+
+  .month-day-number {
+    font-size: 0.7rem;
+  }
+
+  /* Modal adjustments */
+  .modal-content {
+    width: 98%;
+    padding: 16px;
+    margin: 10px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+
+  /* Task adjustments */
+  .task {
+    padding: 8px;
+  }
+
+  .task-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .task-meta {
+    gap: 4px;
+  }
+
+  .task-priority,
+  .task-category {
+    font-size: 0.7rem;
+    padding: 1px 6px;
+  }
+
+  /* Toast adjustments */
+  .toast {
+    min-width: 260px;
+    max-width: 300px;
+    padding: 12px 16px;
+  }
+
+  .toast-container {
+    top: 16px;
+    right: 16px;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (max-height: 600px) and (orientation: landscape) {
+  .app-header {
+    padding: 12px 20px;
+  }
+
+  .planner-container {
+    padding: 12px 20px;
+  }
+
+  .settings-container {
+    padding: 12px 20px;
+  }
+
+  .time-slot {
+    min-height: 50px;
+  }
+
+  .time-label {
+    padding: 8px;
+  }
+
+  .task-area {
+    padding: 6px;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .btn,
+  .task,
+  .modal-content {
+    border-width: 0.5px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .sidebar,
+  .calendar-widget,
+  .mobile-nav-toggle,
+  .btn,
+  .modal,
+  .toast-container {
+    display: none !important;
+  }
+
+  .app-container {
+    grid-template-columns: 1fr;
+  }
+
+  .main-content {
+    grid-column: 1;
+  }
+
+  .app-header {
+    border-bottom: 2px solid #000;
+  }
+
+  .time-slot {
+    border-bottom: 1px solid #000;
+    page-break-inside: avoid;
+  }
+
+  .task {
+    border: 1px solid #000;
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* Desktop optimizations */
+@media (min-width: 1201px) {
+  .app-container {
+    grid-template-columns: 280px 1fr 320px;
+  }
+
+  .week-container {
+    padding: 24px 30px;
+  }
+
+  .settings-container {
+    padding: 24px 30px;
+  }
+
+  .week-day-container {
+    min-height: 350px;
+    padding: 20px;
+  }
+
+  .week-day-container .planner-container {
+    height: 280px;
+  }
+
+  .month-day {
+    min-height: 100px;
+    padding: 10px;
+  }
+
+  .month-day-number {
+    font-size: 1rem;
+  }
+
+  .month-day-tasks {
+    font-size: 0.8rem;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .week-container {
+    padding: 20px 24px;
+  }
+
+  .week-day-container {
+    min-height: 300px;
+    padding: 16px;
+  }
+
+  .week-day-container .planner-container {
+    height: 240px;
+  }
+
+  .month-day {
+    min-height: 80px;
+    padding: 6px;
+  }
+}
+
+/* Focus management for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .modal,
+  .toast {
+    transition: none;
+  }
+
+  .btn:hover {
+    transform: none;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #e8eaed;
+    --text-light: #9aa0a6;
+    --bg-color: #202124;
+    --bg-light: #303134;
+    --border-color: #5f6368;
+    --hover-color: #3c4043;
+  }
+}
