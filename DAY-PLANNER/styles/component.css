@@ -902,3 +902,352 @@ input:checked + .slider:before {
   background: var(--bg-color);
   color: var(--text-color);
 }
+
+/* Task Indicators for Month View */
+.task-indicators-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+
+.task-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--primary-color);
+  color: white;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 20px;
+  position: relative;
+}
+
+.task-indicator:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-indicator.high-priority {
+  background: #dc3545;
+  border-left: 3px solid #c82333;
+}
+
+.task-indicator.medium-priority {
+  background: #ffc107;
+  color: #212529;
+  border-left: 3px solid #e0a800;
+}
+
+.task-indicator.low-priority {
+  background: #28a745;
+  border-left: 3px solid #1e7e34;
+}
+
+.task-indicator.completed {
+  background: #6c757d;
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.task-indicator .task-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.task-indicator .task-actions {
+  display: flex;
+  gap: 1px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.task-indicator:hover .task-actions {
+  opacity: 1;
+}
+
+.task-indicator .btn-icon {
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 1px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 8px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.task-indicator .btn-icon:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.task-indicator .btn-icon.edit:hover {
+  background: rgba(255, 193, 7, 0.3);
+}
+
+.task-indicator .btn-icon.delete:hover {
+  background: rgba(220, 53, 69, 0.3);
+}
+
+.task-indicator .btn-icon.complete:hover {
+  background: rgba(40, 167, 69, 0.3);
+}
+
+/* Month day styling improvements */
+.month-day {
+  position: relative;
+  min-height: 80px;
+  padding: 4px;
+  border: 1px solid #e0e0e0;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.month-day:hover {
+  background: #f8f9fa;
+  border-color: var(--primary-color);
+}
+
+.month-day.today {
+  background: #e3f2fd;
+  border-color: var(--primary-color);
+  font-weight: bold;
+}
+
+.month-day-number {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.month-day-tasks {
+  min-height: 20px;
+}
+
+/* Responsive adjustments for month view */
+@media (max-width: 768px) {
+  .task-indicator {
+    font-size: 9px;
+    padding: 1px 3px;
+  }
+
+  .task-indicator .btn-icon {
+    font-size: 7px;
+    width: 14px;
+    height: 14px;
+  }
+
+  .month-day {
+    min-height: 60px;
+    padding: 2px;
+  }
+
+  .month-day-number {
+    font-size: 11px;
+  }
+}
+
+/* Task Items for Month View */
+.task-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--primary-color);
+  color: white;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 24px;
+  position: relative;
+  border-left: 3px solid var(--primary-dark);
+}
+
+.task-item:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-item.high-priority {
+  background: #dc3545;
+  border-left-color: #c82333;
+}
+
+.task-item.medium-priority {
+  background: #ffc107;
+  color: #212529;
+  border-left-color: #e0a800;
+}
+
+.task-item.low-priority {
+  background: #28a745;
+  border-left-color: #1e7e34;
+}
+
+.task-item.completed {
+  background: #6c757d;
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.task-item .task-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.task-item .task-title {
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 9px;
+}
+
+.task-item .task-time {
+  font-size: 8px;
+  opacity: 0.8;
+  font-weight: normal;
+}
+
+.task-item .task-actions {
+  display: flex;
+  gap: 1px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  margin-left: 4px;
+}
+
+.task-item:hover .task-actions {
+  opacity: 1;
+}
+
+.task-item .btn-icon {
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 2px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 8px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.task-item .btn-icon:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.task-item .btn-icon.edit:hover {
+  background: rgba(255, 193, 7, 0.3);
+}
+
+.task-item .btn-icon.delete:hover {
+  background: rgba(220, 53, 69, 0.3);
+}
+
+.task-item .btn-icon.complete:hover {
+  background: rgba(40, 167, 69, 0.3);
+}
+
+/* Month day styling improvements */
+.month-day {
+  position: relative;
+  min-height: 100px;
+  padding: 4px;
+  border: 1px solid #e0e0e0;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.month-day:hover {
+  background: #f8f9fa;
+  border-color: var(--primary-color);
+}
+
+.month-day.today {
+  background: #e3f2fd;
+  border-color: var(--primary-color);
+  font-weight: bold;
+}
+
+.month-day-number {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.month-day-tasks {
+  min-height: 20px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+/* Responsive adjustments for month view */
+@media (max-width: 768px) {
+  .task-item {
+    font-size: 9px;
+    padding: 3px 4px;
+    min-height: 20px;
+  }
+
+  .task-item .task-title {
+    font-size: 8px;
+  }
+
+  .task-item .task-time {
+    font-size: 7px;
+  }
+
+  .task-item .btn-icon {
+    font-size: 7px;
+    width: 14px;
+    height: 14px;
+  }
+
+  .month-day {
+    min-height: 80px;
+    padding: 2px;
+  }
+
+  .month-day-number {
+    font-size: 11px;
+  }
+
+  .month-day-tasks {
+    max-height: 100px;
+  }
+}

@@ -192,6 +192,12 @@
     <script>
       // Today view specific functionality
       document.addEventListener("DOMContentLoaded", function () {
+        // Ensure the main app.js functions are available first
+        if (typeof initApp === "function") {
+          initApp();
+        }
+
+        // Then generate today view
         generateTodayView();
       });
 

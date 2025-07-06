@@ -193,6 +193,11 @@
       // Week view specific functionality
       document.addEventListener("DOMContentLoaded", function () {
         generateWeekView();
+
+        // Ensure the main app.js functions are available
+        if (typeof initApp === "function") {
+          initApp();
+        }
       });
 
       function generateWeekView() {
@@ -276,7 +281,14 @@
               e.target === timeLabel ||
               e.target === taskArea
             ) {
-              openTaskModalForTimeSlot(hour, dateString);
+              // Use the main app.js function to open modal with pre-filled date and time
+              if (typeof openTaskModal === "function") {
+                const startTime = `${String(hour).padStart(2, "0")}:00`;
+                openTaskModal(null, startTime, dateString);
+              } else {
+                // Fallback
+                openTaskModalForTimeSlot(hour, dateString);
+              }
             }
           });
 
@@ -308,60 +320,63 @@
           dateString
         );
 
-        // Use the main app.js function to open modal with pre-filled date and time
-        if (typeof openTaskModal === "function") {
-          const startTime = `${String(hour).padStart(2, "0")}:00`;
-          openTaskModal(null, startTime, dateString);
-        } else {
-          // Fallback to direct modal opening
-          const modal = document.getElementById("task-modal");
-          const form = document.getElementById("task-form");
+        // Fallback to direct modal opening
+        const modal = document.getElementById("task-modal");
+        const form = document.getElementById("task-form");
 
-          if (!modal || !form) {
-            console.error("Modal or form elements not found");
-            return;
-          }
-
-          // Set up the modal for new task
-          document.getElementById("modal-title").textContent = "Add New Task";
-          form.reset();
-
-          // Set the specific date
-          document.getElementById("task-date").value = dateString;
-
-          // Set start time to the clicked hour
-          const startTime = `${String(hour).padStart(2, "0")}:00`;
-
-          // Get default duration from settings
-          const defaultDuration =
-            parseInt(localStorage.getItem("dayPlannerDefaultDuration")) || 60;
-          const endHour = hour + Math.floor(defaultDuration / 60);
-          const endMinute = defaultDuration % 60;
-          const endTime = `${String(endHour).padStart(2, "0")}:${String(
-            endMinute
-          ).padStart(2, "0")}`;
-
-          document.getElementById("task-start-time").value = startTime;
-          document.getElementById("task-end-time").value = endTime;
-
-          // Set default priority from settings
-          const defaultPriority =
-            localStorage.getItem("dayPlannerDefaultPriority") || "medium";
-          document.getElementById("task-priority").value = defaultPriority;
-
-          // Show modal
-          modal.classList.add("active");
-          document.body.classList.add("modal-open");
-
-          // Focus on title input
-          setTimeout(() => {
-            const titleInput = document.getElementById("task-title");
-            if (titleInput) {
-              titleInput.focus();
-            }
-          }, 100);
+        if (!modal || !form) {
+          console.error("Modal or form elements not found");
+          return;
         }
+
+        // Set up the modal for new task
+        document.getElementById("modal-title").textContent = "Add New Task";
+        form.reset();
+
+        // Set the specific date
+        document.getElementById("task-date").value = dateString;
+
+        // Set start time to the clicked hour
+        const startTime = `${String(hour).padStart(2, "0")}:00`;
+
+        // Get default duration from settings
+        const defaultDuration =
+          parseInt(localStorage.getItem("dayPlannerDefaultDuration")) || 60;
+        const endHour = hour + Math.floor(defaultDuration / 60);
+        const endMinute = defaultDuration % 60;
+        const endTime = `${String(endHour).padStart(2, "0")}:${String(
+          endMinute
+        ).padStart(2, "0")}`;
+
+        document.getElementById("task-start-time").value = startTime;
+        document.getElementById("task-end-time").value = endTime;
+
+        // Set default priority from settings
+        const defaultPriority =
+          localStorage.getItem("dayPlannerDefaultPriority") || "medium";
+        document.getElementById("task-priority").value = defaultPriority;
+
+        // Show modal
+        modal.classList.add("active");
+        document.body.classList.add("modal-open");
+
+        // Focus on title input
+        setTimeout(() => {
+          const titleInput = document.getElementById("task-title");
+          if (titleInput) {
+            titleInput.focus();
+          }
+        }, 100);
       }
+
+      // Function to refresh week view after task changes
+      function refreshWeekView() {
+        generateWeekView();
+      }
+
+      // Make refresh function globally available
+      window.refreshWeekView = refreshWeekView;
+      window.generateWeekView = generateWeekView;
     </script>
   </body>
 </html>

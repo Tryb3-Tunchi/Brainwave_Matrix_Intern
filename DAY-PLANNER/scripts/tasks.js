@@ -1,9 +1,12 @@
 class TaskManager {
   constructor() {
+    console.log("TaskManager constructor called");
     this.tasks = JSON.parse(localStorage.getItem("dayPlannerTasks")) || [];
+    console.log("TaskManager initialized with", this.tasks.length, "tasks");
   }
 
   addTask(taskData) {
+    console.log("Adding task:", taskData);
     const newTask = {
       id: this.generateId(),
       ...taskData,
@@ -14,10 +17,12 @@ class TaskManager {
 
     this.tasks.push(newTask);
     this.saveTasks();
+    console.log("Task added successfully:", newTask);
     return newTask;
   }
 
   updateTask(idOrTask, updates) {
+    console.log("Updating task:", idOrTask, updates);
     let taskId, taskUpdates;
 
     // Handle both formats: updateTask(taskObject) or updateTask(id, updates)
@@ -33,7 +38,10 @@ class TaskManager {
     }
 
     const taskIndex = this.tasks.findIndex((task) => task.id === taskId);
-    if (taskIndex === -1) return null;
+    if (taskIndex === -1) {
+      console.error("Task not found for update:", taskId);
+      return null;
+    }
 
     const updatedTask = {
       ...this.tasks[taskIndex],
@@ -43,19 +51,25 @@ class TaskManager {
 
     this.tasks[taskIndex] = updatedTask;
     this.saveTasks();
+    console.log("Task updated successfully:", updatedTask);
     return updatedTask;
   }
 
   deleteTask(id) {
+    console.log("Deleting task:", id);
     this.tasks = this.tasks.filter((task) => task.id !== id);
     this.saveTasks();
+    console.log("Task deleted successfully");
   }
 
   getTasksForDate(date) {
-    return this.tasks.filter((task) => task.date === date);
+    const tasks = this.tasks.filter((task) => task.date === date);
+    console.log(`Getting tasks for date ${date}:`, tasks.length, "tasks");
+    return tasks;
   }
 
   getAllTasks() {
+    console.log("Getting all tasks:", this.tasks.length);
     return this.tasks;
   }
 
@@ -76,11 +90,14 @@ class TaskManager {
   }
 
   saveTasks() {
+    console.log("Saving tasks to localStorage:", this.tasks.length, "tasks");
     localStorage.setItem("dayPlannerTasks", JSON.stringify(this.tasks));
   }
 
   loadTasks() {
+    console.log("Loading tasks from localStorage");
     this.tasks = JSON.parse(localStorage.getItem("dayPlannerTasks")) || [];
+    console.log("Loaded", this.tasks.length, "tasks");
   }
 }
 
